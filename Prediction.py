@@ -1,10 +1,6 @@
 import joblib
 import pickle
-try:
-  import praw
-except:
-  !pip install praw
-  import praw
+import praw
 import pandas as pd
 from pandas import ExcelWriter
 import datetime as dt
@@ -64,11 +60,11 @@ pbar.close()
 df1 = pd.DataFrame(comments, columns=['Comments'])
 
 # carico il vectorizer e vettorizzo i commenti
-loaded_vectorizer = pickle.load(open('/content/drive/MyDrive/SentimentAnalisys/models/vectorizer.pickle', 'rb'))
+loaded_vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
 df1['Vect'] = loaded_vectorizer.transform(df1['Comments'])
 
 # Carico il modello addestrato
-knn_from_joblib = joblib.load('/content/drive/MyDrive/SentimentAnalisys/models/reddit.pkl')
+knn_from_joblib = joblib.load('reddit.pkl')
 
 
 # Utilizzo il modello per fare le predizioni
@@ -133,7 +129,7 @@ df2 = pd.DataFrame(most_occur, columns=['Comments', 'Number'])
 now = str(dt.datetime.now())
 
 # Salvo il dataframe in Excel
-writer = ExcelWriter('/content/drive/MyDrive/SentimentAnalisys/excels/Subreddit=' + source + '_Keyword=' + keyword + '_Date=' + now[:10] + '.xlsx')
+writer = ExcelWriter('Subreddit=' + source + '_Keyword=' + keyword + '_Date=' + now[:10] + '.xlsx')
 df1.to_excel(writer, 'sheet1')
 df2.to_excel(writer, 'sheet2')
 writer.save()
@@ -142,7 +138,7 @@ writer.save()
 fig, axl = plt.subplots()
 axl.bar(df2['Comments'], df2['Number'])
 fig.autofmt_xdate()
-plt.savefig('/content/drive/MyDrive/SentimentAnalisys/charts/Subreddit=' + source + '_Keyword=' + keyword + '_Date=' + now[:10] + '_RecurrentWords' + '.png')
+plt.savefig('Subreddit=' + source + '_Keyword=' + keyword + '_Date=' + now[:10] + '_RecurrentWords' + '.png')
 plt.show()
 
 labels = 'Positive', 'Negative'
@@ -150,5 +146,5 @@ sizes = [pos, neg]
 colors = ['lightgreen', 'lightcoral']
 plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
 plt.axis('equal')
-plt.savefig('/content/drive/MyDrive/SentimentAnalisys/charts/Subreddit=' + source + '_Keyword=' + keyword + '_Date=' + now[:10] + '_Sentiment' + '.png')
+plt.savefig('Subreddit=' + source + '_Keyword=' + keyword + '_Date=' + now[:10] + '_Sentiment' + '.png')
 plt.show()
