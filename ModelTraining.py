@@ -1,13 +1,13 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier as KNN
-import joblib #prova
+import joblib
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score
 import pickle
 
 # Carico il dataset
-df = pd.read_csv('/content/drive/MyDrive/SentimentAnalisys/stock_data.csv')
+df = pd.read_csv('stock_data.csv')
 
 X = df['Text']
 y = df['Sentiment']
@@ -16,7 +16,7 @@ vect = CountVectorizer()  # ngram_range=(1, 2)
 X = vect.fit_transform(X)
 
 # Salvo il vectorizer
-vec_file = '/content/drive/MyDrive/SentimentAnalisys/models/vectorizer.pickle'
+vec_file = 'vectorizer.pickle'
 pickle.dump(vect, open(vec_file, 'wb'))
 
 # Divido il Dataset in Train e Test
@@ -40,4 +40,4 @@ print(f'Train accuracy score: {acc_train}, test accuracy score: {acc_test}')
 
 
 # Salvo il modello
-joblib.dump(knn, '/content/drive/MyDrive/SentimentAnalisys/models/reddit.pkl')
+joblib.dump(knn, 'reddit.pkl')
