@@ -10,7 +10,7 @@ import pickle
 df = pd.read_csv('/content/drive/MyDrive/SentimentAnalisys/stock_data.csv')
 
 X = df['Text']
-y = df['Sentiment']
+y = df['Sentiment'] #prova
 
 vect = CountVectorizer()  # ngram_range=(1, 2)
 X = vect.fit_transform(X)
