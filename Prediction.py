@@ -167,7 +167,7 @@ except:
   ws.append([now[:10], pos, neg, pos+neg, pos/(pos+neg)])
   wb.save(keyword + '_SentimentOverTime.xlsx')
   
-  # Con i dati salvati sull'excel creo un grafico del sentimento 
+# Con i dati salvati sull'excel creo un grafico del sentimento
 xls_file = pd.ExcelFile(keyword + '_SentimentOverTime.xlsx')
 
 df4 = xls_file.parse()
